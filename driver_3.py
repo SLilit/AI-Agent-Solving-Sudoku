@@ -31,7 +31,19 @@ class SBoard(object):
             self.parent = parent
         self.children = []
 
+    def solved(self):
+        print("____________________")
+        
+        if self.values == {}:
+            for i in range(9):
+                if set(self.rows[i]) != set(self.domains):
+                    return False
+                elif self.columns[i] != set(self.domains):
+                    return False
+                if self.boxes[i] != set(self.domains):
+                    return False
+            print ('solved!!!!!!!!!')
+            return True
+        return False
 
-
-
-
+    
