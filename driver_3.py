@@ -46,4 +46,13 @@ class SBoard(object):
             return True
         return False
 
-    
+    def display(self):
+        c = 0
+        for r in range(9):
+            c += 1
+            print (self.rows[r][:3], ' ', self.rows[r][3:6], ' ', self.rows[r][6:])
+            if c == 3:
+                print ('')
+                c =0
+
+ 
