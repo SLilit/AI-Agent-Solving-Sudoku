@@ -55,4 +55,31 @@ class SBoard(object):
                 print ('')
                 c =0
 
- 
+    def expand(self):
+        print('--------------')
+
+        md = float('inf')
+        for key,domains in self.values.items():
+            if len(domains) == 0:
+                return False
+            if len(domains) <= md:
+                min_domains = domains
+                min_key = key
+                md = len(domains)
+        k = [int(key) for key in min_key]
+        for value in min_domains:
+            rows = self.rows.copy()
+            rows[k[0]][k[1]] = value
+            columns = [self.columns[i].copy() for i in range(9) ]
+            columns[k[1]].add(value)
+            boxes = [self.boxes[i].copy() for i in range(9) ]           
+            boxes[k[2]].add(value)
+            new_child = SBoard(rows, columns, boxes, self.parent)
+            self.children.append(new_child)
+        return self.children
+
+
+
+
+
+
