@@ -79,6 +79,27 @@ class SBoard(object):
         return self.children
 
 
+def bts(sudoku):
+    
+    visited = set(sudoku.config)
+    frontier = []
+
+    while not sudoku.solved():
+        states = sudoku.expand()
+        if states:
+            states = states[::-1]
+            for i in range(len(states)):
+                config = states[i].config
+                if config not in visited:
+                    visited.add(config)
+                    frontier.append(states[i])
+        if len(frontier) == 0:
+            sudoku.display()
+            return str(sudoku.config) + " BTS"
+        sudoku = frontier.pop()
+    return sudoku.config + " BTS"
+
+
 
 
 
