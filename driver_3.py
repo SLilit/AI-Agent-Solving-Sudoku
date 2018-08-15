@@ -99,7 +99,48 @@ def bts(sudoku):
         sudoku = frontier.pop()
     return sudoku.config + " BTS"
 
+def main():
 
+    boards = np.genfromtxt(sys.argv[1], delimiter = 1)
+    #finish = np.genfromtxt(sys.argv[2], delimiter = 1)
+    #fn = finish[6]
+    board = boards[6]
+    #board = str(sys.argv[1])
+    print('initial: ', board)
+    rows = np.zeros(shape = (9,9))
+    columns = [set(),set(),set(),set(),set(),set(),set(),set(),set()]
+    boxes = [set(),set(),set(),set(),set(),set(),set(),set(),set()]
+    n = 0
+    #f = ''
+    for r in range(9):
+        for c in range(9):
+            rows[r][c] = int(board[n])
+            #f += str(int(fn[n]))
+            if int(board[n]) != 0:
+                columns[c].add(int(board[n]))
+                if r < 3:
+                    b = int(r/3) + int(c/3)
+                    boxes[b].add(int(board[n]))
+                elif r < 6:
+                    b = int(r/3) + int(c/3) + 2
+                    boxes[b].add(int(board[n]))
+                elif r < 9:
+                    b = int(r/3) + int(c/3) + 4
+                    boxes[b].add(int(board[n]))
+            
+            n += 1
+    
+    sboard = SBoard(rows,columns,boxes)
+    print (sboard.display())
+    solved_sudoku = bts(sboard)
+    with open('output.txt', 'w') as output:
+        output.write(solved_sudoku)
+    #f += ' BTS'
+    #print (solved_sudoku == f)
+    #print (finish[6])
+
+if __name__ == '__main__':
+    main()
 
 
 
